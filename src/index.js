@@ -6,7 +6,7 @@ var weatherForecastForWeek = [];
 
 $(document).ready(
     function(){
-        showWeatherForecast();
+        getForecast();
         
     }
 )
@@ -21,9 +21,12 @@ function getForecast() {
         console.log(response);
 
         response.list.forEach(iterateWeatherList) ;
+           
+    }).then(function () {
 
-   
-    })
+        createTable();
+
+    });
 }
 
 function iterateWeatherList(dayForecast) {
@@ -43,35 +46,43 @@ function iterateWeatherList(dayForecast) {
 
     // checking weather forecast is available for same date.
     var tempArray = $.grep(weatherForecastForWeek, function(element){ 
-        return element[0].date == dayForecast.dt_txt.substring(0,10); 
+        console.log(element);
+        return element.date == dayForecast.dt_txt.substring(0,10); 
     });
     if(tempArray.length == 0) {
         weatherForecastForWeek.push(weatherForecast);
     }
-     
+
+}
+
+
+function createTable(){
+    var table = $('<table></table>');
+    var count;
+    console.log("3  "+weatherForecastForWeek);
+    console.log("4  "+ weatherForecastForWeek.length);
+    for( count = 1; count < weatherForecastForWeek.length; count++){
+
+         $("#date"+ count).html(weatherForecastForWeek[count].date); 
+
+        table.append($('<tr></tr>').text(' Date ' + weatherForecastForWeek[count].date));
+        table.append($('<tr></tr>').text(' Temperature ' + weatherForecastForWeek[count].temp));
+        table.append($('<tr></tr>').text(' Maximum Temperature ' + weatherForecastForWeek[count].temp_max));
+        table.append($('<tr></tr>').text(' Minimum Temperature ' + weatherForecastForWeek[count].temp_min));
+        table.append($('<tr></tr>').text(' Humidity ' + weatherForecastForWeek[count].humidity));
+        table.append($('<tr></tr>').text(' Wind Degree ' + weatherForecastForWeek[count].wind_deg));
+        table.append($('<tr></tr>').text(' Wind Speed ' + weatherForecastForWeek[count].wind_speed));
+        table.append($('<tr></tr>').text(' Description ' + weatherForecastForWeek[count].desc));
+        $('#table'+i).html(table);
+    }
 }
 
 function showWeatherForecast() {
-    getForecast();
 
-    var table = $('<table></table>');
-    var count;
-    console.log(weatherForecastForWeek);
-    console.log(weatherForecastForWeek.length);
-    for( count = 1; count < weatherForecastForWeek.length; count++){
+    $.when(getForecast()).then(function () {
 
-         $("#date"+i).html(weatherForecastForWeek[i].date); 
+        createTable();
 
-        table.append($('<tr></tr>').text(' Date ' + weatherForecastForWeek[i].date));
-        table.append($('<tr></tr>').text(' Temperature ' + weatherForecastForWeek[i].temp));
-        table.append($('<tr></tr>').text(' Maximum Temperature ' + weatherForecastForWeek[i].temp_max));
-        table.append($('<tr></tr>').text(' Minimum Temperature ' + weatherForecastForWeek[i].temp_min));
-        table.append($('<tr></tr>').text(' Humidity ' + weatherForecastForWeek[i].humidity));
-        table.append($('<tr></tr>').text(' Wind Degree ' + weatherForecastForWeek[i].wind_deg));
-        table.append($('<tr></tr>').text(' Wind Speed ' + weatherForecastForWeek[i].wind_speed));
-        table.append($('<tr></tr>').text(' Description ' + weatherForecastForWeek[i].desc));
-        $('#table'+i).html(table);
-    }
+    });
 
-    
 }
