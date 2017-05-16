@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
-    <head> <h2>Weather App </h2></head>
+    <head> 
+        <title>Weather App</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>   
+    
     <body>
+        <p class="heading"> Weather App </p>
+
+        <br><br>
+
         <div id="app">
-            <table>
+            <table class="titletable">
                 <tr> 
                     <th> City </th>
                     <td id="city"> </td> 
@@ -18,16 +26,20 @@
                 </tr>
             </table>
             <br><br>
-            <div id="table0"></div>
-            <br><br>
-            <div id="table1"></div>
-            <br><br>
-            <div id="table2"></div>
-            <br><br>
-            <div id="table3"></div>
-            <br><br>
-            <div id="table4"></div>
-
+            
+            <table class="contentTable">
+                <tr>
+                    <td><img class="image" src="/assets/pune.jpg"><img></td>
+                    <td><table id="table0" class="infoTable"></table></td>
+                    <td><table id="table1" class="infoTable"></table></td>
+                </tr>
+                <tr>
+                    <td><table id="table2" class="infoTable"></table></td>
+                    <td><table id="table3" class="infoTable"></table></td>
+                    <td><table id="table4" class="infoTable"></table></td>
+                </tr>
+            </table>    
+         
         </div>
     </body>
 </html>

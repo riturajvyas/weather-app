@@ -1,0 +1,56 @@
+p.heading{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 45px;
+    color: cadetblue;
+    text-align: center;
+}
+table.titletable {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+}
+table.titletable th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+table.titletable td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+table.infoTable {
+    font-family: verdana,arial,sans-serif;
+    font-size:8px;
+    border-width: 1px;
+    padding: 16px;
+    border-style: dashed;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+table.contentTable {
+    
+    border-width: 1px;
+    padding: 20px;
+    border-style: double;
+    border-color: brown;
+    background-color: burlywood;
+    width: 70%;
+    margin: auto;
+}
+
+image {
+    width: 50%;
+    height: 50%;
+}

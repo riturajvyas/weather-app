@@ -66,15 +66,15 @@ function createTable(){
     for( count = 0; count < weatherForecastForWeek.length; count++){
 
         // $("#date"+ count).html(weatherForecastForWeek[count].date); 
-        var table = $('<table></table>');
-        table.append($('<tr></tr>').text(' Date ' + weatherForecastForWeek[count].date));
-        table.append($('<tr></tr>').text(' Temperature ' + weatherForecastForWeek[count].temp + ' Kelvin'));
-        table.append($('<tr></tr>').text(' Maximum Temperature ' + weatherForecastForWeek[count].temp_max + ' Kelvin'));
-        table.append($('<tr></tr>').text(' Minimum Temperature ' + weatherForecastForWeek[count].temp_min + ' Kelvin'));
-        table.append($('<tr></tr>').text(' Humidity ' + weatherForecastForWeek[count].humidity  + ' %'));
-        table.append($('<tr></tr>').text(' Wind Degree ' + weatherForecastForWeek[count].wind_deg + ' degrees'));
-        table.append($('<tr></tr>').text(' Wind Speed ' + weatherForecastForWeek[count].wind_speed + ' meter/sec'));
-        table.append($('<tr></tr>').text(' Description ' + weatherForecastForWeek[count].desc));
+        var table = $('<table></table>').addClass('titleTable');
+        table.append($('<tr></tr>').text(' Date: ' + weatherForecastForWeek[count].date));
+        table.append($('<tr></tr>').text(' Temperature: ' + weatherForecastForWeek[count].temp + ' Kelvin'));
+        table.append($('<tr></tr>').text(' Maximum Temperature: ' + weatherForecastForWeek[count].temp_max + ' Kelvin'));
+        table.append($('<tr></tr>').text(' Minimum Temperature: ' + weatherForecastForWeek[count].temp_min + ' Kelvin'));
+        table.append($('<tr></tr>').text(' Humidity: ' + weatherForecastForWeek[count].humidity  + ' %'));
+        table.append($('<tr></tr>').text(' Wind Degree: ' + weatherForecastForWeek[count].wind_deg + ' degrees'));
+        table.append($('<tr></tr>').text(' Wind Speed: ' + weatherForecastForWeek[count].wind_speed + ' meter/sec'));
+        table.append($('<tr></tr>').text(' Description: ' + weatherForecastForWeek[count].desc));
         $('#table'+ count).html(table);
     }
 }
