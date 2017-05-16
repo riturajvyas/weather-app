@@ -122,19 +122,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var weatherForecast = [];
 var weatherForecastForWeek = [];
+var APPID = '0d1f8c8af4a3403bff59f4e5ca902546';
+var puneCityId = '1259229';
 
 (0, _jquery2.default)(document).ready(function () {
-    getForecast();
+    getForecast(puneCityId);
 });
 
-function getForecast() {
+function getForecast(cityId) {
 
-    _jquery2.default.get("http://api.openweathermap.org/data/2.5/forecast?id=1259229&APPID=0d1f8c8af4a3403bff59f4e5ca902546", function (response) {
+    _jquery2.default.get("http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + APPID, function (response) {
 
         (0, _jquery2.default)("#city").html(response.city.name);
+        (0, _jquery2.default)("#lon").html(response.city.coord.lon);
+        (0, _jquery2.default)("#lat").html(response.city.coord.lat);
 
         console.log(response);
-
+        weatherForecast = [];
         response.list.forEach(iterateWeatherList);
     }).then(function () {
 
@@ -143,9 +147,8 @@ function getForecast() {
 }
 
 function iterateWeatherList(dayForecast) {
-    weatherForecast = [];
 
-    weatherForecast.push({ "date": dayForecast.dt_txt.substring(0, 10),
+    var weatherData = { "date": dayForecast.dt_txt.substring(0, 10),
         "temp": dayForecast.main.temp,
         "temp_max": dayForecast.main.temp_max,
         "temp_min": dayForecast.main.temp_min,
@@ -153,47 +156,37 @@ function iterateWeatherList(dayForecast) {
         "wind_deg": dayForecast.wind.deg,
         "wind_speed": dayForecast.wind.speed,
         "desc": dayForecast.weather[0].description
-    });
+    };
+    weatherForecast.push(weatherData);
 
     // checking weather forecast is available for same date.
+    // Only showing first forecast of the day.
     var tempArray = _jquery2.default.grep(weatherForecastForWeek, function (element) {
-        console.log(element);
         return element.date == dayForecast.dt_txt.substring(0, 10);
     });
     if (tempArray.length == 0) {
-        weatherForecastForWeek.push(weatherForecast);
+        weatherForecastForWeek.push(weatherData);
     }
-    console.log("1  " + weatherForecast);
-    console.log("2  " + tempArray.length);
 }
 
 function createTable() {
-    var table = (0, _jquery2.default)('<table></table>');
+
     var count;
-    console.log("3  " + weatherForecastForWeek);
-    console.log("4  " + weatherForecastForWeek.length);
-    for (count = 1; count < weatherForecastForWeek.length; count++) {
 
-        (0, _jquery2.default)("#date" + count).html(weatherForecastForWeek[count].date);
+    for (count = 0; count < weatherForecastForWeek.length; count++) {
 
+        // $("#date"+ count).html(weatherForecastForWeek[count].date); 
+        var table = (0, _jquery2.default)('<table></table>');
         table.append((0, _jquery2.default)('<tr></tr>').text(' Date ' + weatherForecastForWeek[count].date));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Temperature ' + weatherForecastForWeek[count].temp));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Maximum Temperature ' + weatherForecastForWeek[count].temp_max));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Minimum Temperature ' + weatherForecastForWeek[count].temp_min));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Humidity ' + weatherForecastForWeek[count].humidity));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Wind Degree ' + weatherForecastForWeek[count].wind_deg));
-        table.append((0, _jquery2.default)('<tr></tr>').text(' Wind Speed ' + weatherForecastForWeek[count].wind_speed));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Temperature ' + weatherForecastForWeek[count].temp + ' Kelvin'));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Maximum Temperature ' + weatherForecastForWeek[count].temp_max + ' Kelvin'));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Minimum Temperature ' + weatherForecastForWeek[count].temp_min + ' Kelvin'));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Humidity ' + weatherForecastForWeek[count].humidity + ' %'));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Wind Degree ' + weatherForecastForWeek[count].wind_deg + ' degrees'));
+        table.append((0, _jquery2.default)('<tr></tr>').text(' Wind Speed ' + weatherForecastForWeek[count].wind_speed + ' meter/sec'));
         table.append((0, _jquery2.default)('<tr></tr>').text(' Description ' + weatherForecastForWeek[count].desc));
-        (0, _jquery2.default)('#table' + i).html(table);
+        (0, _jquery2.default)('#table' + count).html(table);
     }
-}
-
-function showWeatherForecast() {
-
-    _jquery2.default.when(getForecast()).then(function () {
-
-        createTable();
-    });
 }
 
 /***/ }),
