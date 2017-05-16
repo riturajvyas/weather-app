@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import {} from 'lodash'
 
 var weatherForecast =  [];
 var weatherForecastForWeek = [];
@@ -8,28 +7,20 @@ const puneCityId = '1259229';
 
 $(document).ready(
     function(){
-        getForecast(puneCityId);
-        
+        getWeatherForecast(puneCityId);
     }
 )
 
-function getForecast(cityId) {
+function getWeatherForecast(cityId) {
     
     $.get("http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + APPID, function (response){
-        
         $("#city").html(response.city.name);
         $("#lon").html(response.city.coord.lon);
         $("#lat").html(response.city.coord.lat);
         
-        console.log(response);
-        weatherForecast = [];
         response.list.forEach(iterateWeatherList) ;
-
-        
     }).then(function () {
-
         createTable();
-
     });
 }
 
@@ -46,10 +37,8 @@ function iterateWeatherList(dayForecast) {
                         };
     weatherForecast.push( weatherData );
 
-    
-
     // checking weather forecast is available for same date.
-    // Only showing first forecast of the day.
+    // Only showing first forecast of the day unlike every 3 hours.
     var tempArray = $.grep(weatherForecastForWeek, function(element){ 
         return element.date == dayForecast.dt_txt.substring(0,10); 
     });
@@ -62,10 +51,7 @@ function iterateWeatherList(dayForecast) {
 function createTable(){
    
     var count;
-    
     for( count = 0; count < weatherForecastForWeek.length; count++){
-
-        // $("#date"+ count).html(weatherForecastForWeek[count].date); 
         var table = $('<table></table>').addClass('titleTable');
         table.append($('<tr></tr>').text(' Date: ' + weatherForecastForWeek[count].date));
         table.append($('<tr></tr>').text(' Temperature: ' + weatherForecastForWeek[count].temp + ' Kelvin'));
@@ -78,4 +64,3 @@ function createTable(){
         $('#table'+ count).html(table);
     }
 }
-
